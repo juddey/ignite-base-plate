@@ -1,0 +1,10 @@
+{
+  "createdWith": "<%= props.igniteVersion %>",
+  "ignite-base-plate": {
+<% if (props.storybooks === true) { %>    "storybooks": true,<% } %>
+<% if (props.i18n === true) { %>    "i18n": true,<% } %>
+    "format": "<%= props.dirstructure %>",
+    "sourcepath": "<%= props.sourcepath %>",
+    "componentpath": "<%= props.sourcepath %>"
+  }
+}
