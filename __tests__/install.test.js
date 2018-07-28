@@ -11,7 +11,7 @@ jasmine.DEFAULT_TIMEOUT_INTERVAL = 600000
 test('writes the install files', async () => {
   let dir = tempy.directory()
   process.chdir(dir)
-  await execa(IGNITE, ['new', `${APP}`, '-b', 'ignite-base-plate', '--max'])
+  await execa(IGNITE, ['new', `${APP}`, '-b', 'ignite-magic-plate', '--max'])
   process.chdir(APP)
   expect(jetpack.list().includes('src')).toBe(true)
   expect(jetpack.list().includes('storybook')).toBe(true)
