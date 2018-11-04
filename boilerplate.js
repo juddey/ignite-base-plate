@@ -52,7 +52,7 @@ async function install (context) {
 
   const name = parameters.third
   const spinner = print
-    .spin(`using the ignite ${cyan('base')} boilerplate`)
+    .spin(`using the ignite ${cyan('magic')} base`)
     .succeed()
 
   const features = answers['dir-structure'] === 'feature'
@@ -207,7 +207,7 @@ async function install (context) {
   try {
     // boilerplate adds itself to get plugin.js/generators etc
     // Could be directory, npm@version, or just npm name.  Default to passed in values
-    const boilerplate = parameters.options.b || parameters.options.boilerplate || 'ignite-base-plate'
+    const boilerplate = parameters.options.b || parameters.options.boilerplate || 'ignite-magic-plate'
 
     await system.spawn(`ignite add ${boilerplate} ${debugFlag}`, { stdio: 'inherit' })
     // Plugin install can go here.
