@@ -13,7 +13,8 @@ const { getReactNativeVersion } = require('./lib/react-native-version')
 const isAndroidInstalled = function (context) {
   const androidHome = process.env['ANDROID_HOME']
   const hasAndroidEnv = !context.strings.isBlank(androidHome)
-  const hasAndroid = hasAndroidEnv && context.filesystem.exists(`${androidHome}/tools`) === 'dir'
+  const hasAndroid =
+    hasAndroidEnv && context.filesystem.exists(`${androidHome}/tools`) === 'dir'
 
   return Boolean(hasAndroid)
 }
@@ -37,7 +38,7 @@ async function install (context) {
   const { colors } = print
   const { red, gray, blue, bold, cyan, yellow } = colors
 
-  const perfStart = (new Date()).getTime()
+  const perfStart = new Date().getTime()
 
   // --feature, --function, interactive
   let answers
@@ -51,9 +52,7 @@ async function install (context) {
   }
 
   const name = parameters.third
-  const spinner = print
-    .spin(`using the ignite ${cyan('magic')} base`)
-    .succeed()
+  const spinner = print.spin(`using ignite ${cyan('base')} plate`).succeed()
 
   const features = answers['dir-structure'] === 'feature'
   const pathToMainJs = features ? './src/app/' : '/App/Containers/'
@@ -108,7 +107,10 @@ async function install (context) {
     { template: '.editorconfig', target: '.editorconfig' },
     { template: '.babelrc', target: '.babelrc' },
     { template: 'main/main.js.ejs', target: `${pathToMainJs}/main.js` },
-    { template: 'main/root-component.js.ejs', target: `${pathToMainJs}/root-component.js` },
+    {
+      template: 'main/root-component.js.ejs',
+      target: `${pathToMainJs}/root-component.js`
+    },
     { template: '.env', target: '.env' }
   ]
 
@@ -116,12 +118,18 @@ async function install (context) {
   if (storybooks) {
     templates.push(
       { template: 'storybook/index.ejs', target: 'storybook/index.js' },
-      { template: 'storybook/storybook-registry.ejs', target: 'storybook/storybook-registry.js' })
+      {
+        template: 'storybook/storybook-registry.ejs',
+        target: 'storybook/storybook-registry.js'
+      }
+    )
   }
 
   if (linter) {
-    templates.push({ template: '.prettierrc', target: '.prettierrc' },
-      { template: '.prettierignore', target: '.prettierignore' })
+    templates.push(
+      { template: '.prettierrc', target: '.prettierrc' },
+      { template: '.prettierignore', target: '.prettierignore' }
+    )
   }
 
   const templateProps = {
@@ -197,7 +205,9 @@ async function install (context) {
   if (ii18n) {
     spinner.text = `▸ linking native libraries`
     spinner.start()
-    await system.spawn('react-native link react-native-i18n', { stdio: 'ignore' })
+    await system.spawn('react-native link react-native-i18n', {
+      stdio: 'ignore'
+    })
     spinner.stop()
   }
 
@@ -207,16 +217,23 @@ async function install (context) {
   try {
     // boilerplate adds itself to get plugin.js/generators etc
     // Could be directory, npm@version, or just npm name.  Default to passed in values
-    const boilerplate = parameters.options.b || parameters.options.boilerplate || 'ignite-magic-plate'
+    const boilerplate =
+      parameters.options.b ||
+      parameters.options.boilerplate ||
+      'ignite-base-plate'
 
-    await system.spawn(`ignite add ${boilerplate} ${debugFlag}`, { stdio: 'inherit' })
+    await system.spawn(`ignite add ${boilerplate} ${debugFlag}`, {
+      stdio: 'inherit'
+    })
     // Plugin install can go here.
   } catch (e) {
     ignite.log(e)
     throw e
   }
 
-  if (linter) { await system.spawn(`yarn run lint`) }
+  if (linter) {
+    await system.spawn(`yarn run lint`)
+  }
 
   // git config
   const gitExists = await filesystem.exists('./.git')
@@ -227,10 +244,11 @@ async function install (context) {
     spinner.succeed(`configured git`)
   }
 
-  const perfDuration = parseInt(((new Date()).getTime() - perfStart) / 10) / 100
+  const perfDuration = parseInt((new Date().getTime() - perfStart) / 10) / 100
   spinner.succeed(`ignited ${yellow(name)} in ${perfDuration}s`)
 
-  const androidInfo = isAndroidInstalled(context) ? ''
+  const androidInfo = isAndroidInstalled(context)
+    ? ''
     : `\n\nTo run in Android, make sure you've followed the latest react-native setup instructions at https://facebook.github.io/react-native/docs/getting-started.html before using ignite.\nYou won't be able to run ${bold('react-native run-android')} successfully until you have.`
 
   const successMessage = `
