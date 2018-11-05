@@ -14,11 +14,12 @@
     "react-native-keychain": "3.0.0"
   },
   "devDependencies": {
-    <% if (props.storybooks === true) { %>
+    <% if (props.storybooks) { %>
     "@storybook/addon-actions": "^4.0.2",
     "@storybook/addon-links": "^4.0.2",
     "@storybook/addons": "^4.0.2",
-    "@storybook/react-native": "^3.4.0",
+    "@storybook/react-native": "^4.0.2",
+    "react-dom": "^16.6.0",
     <% } %>
     <% if (props.linter === true) { %>
       "prettier-standard": "^8.0.1", 
