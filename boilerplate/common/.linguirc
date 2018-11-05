@@ -1,0 +1,5 @@
+{
+   "localeDir": "i18n/",
+   "srcPathDirs": ["src/"],
+   "format": "po"
+}

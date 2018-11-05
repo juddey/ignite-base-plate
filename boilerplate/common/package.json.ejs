@@ -1,6 +1,11 @@
 {
   "version": "0.0.1",
   "scripts": {
+    <% if (props.i18n) { %>
+      "add-locale": "lingui add-locale",
+      "extract": "lingui extract",
+      "compile": "lingui compile",
+    <% } %>
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "lint": "prettier-standard 'src/**/*.js'",
@@ -10,7 +15,7 @@
   "dependencies": {
     "lodash": "^4.17.4",
     "ramda": "0.25.0",
-    <% if (props.i18n === true) { %> "react-native-i18n": "2.0.12", <% } %>
+    <% if (props.i18n === true) { %> "@lingui/react": "2.2.0", <% } %>
     "react-native-keychain": "3.0.0"
   },
   "devDependencies": {
@@ -21,6 +26,13 @@
     "@storybook/react-native": "^4.0.2",
     "react-dom": "^16.6.0",
     <% } %>
+    <% if (props.i18n) { %>
+      "@babel/core": "7.1.2",
+      "babel-core": "7.0.0-bridge.0",
+      "babel-plugin-macros": "^2.4.2",      
+      "@lingui/cli": "^2.7.0",
+      "@lingui/macro": "^2.7.0",
+      <% } %>
     <% if (props.linter === true) { %>
       "prettier-standard": "^8.0.1", 
       "husky": "0.14.3",
