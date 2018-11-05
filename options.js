@@ -16,7 +16,7 @@ const questions = [
   },
   {
     name: 'storybooks',
-    message: 'Would you like storybook set up?',
+    message: 'Howz about storybooks?',
     type: 'list',
     choices: ['yes', 'no']
   },
