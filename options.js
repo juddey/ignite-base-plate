@@ -29,17 +29,19 @@ const questions = [
 ]
 
 /**
-   * The min preset.
+   * The function preset.
    */
-const min = {
-  'dir-structure': 'feature',
+const func = {
+  'dir-structure': 'function',
+  'linter': true,
+  'storybooks': true,
   'i18n': true
 }
 
 /**
-   * The max preset.
+   * The feature preset.
    */
-const max = {
+const feat = {
   'dir-structure': 'feature',
   'linter': true,
   'storybooks': true,
@@ -48,5 +50,5 @@ const max = {
 
 module.exports = {
   questions,
-  answers: { min, max }
+  answers: { func, feat }
 }

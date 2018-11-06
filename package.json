@@ -10,7 +10,7 @@
   "scripts": {
     "format": "prettier-standard",
     "lint": "standard",
-    "test": "jest",
+    "test": "jest --runInBand",
     "watch": "jest --watch",
     "coverage": "jest --runInBand --coverage",
     "shipit": "np"

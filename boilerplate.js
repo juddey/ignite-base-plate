@@ -43,21 +43,22 @@ async function install (context) {
   // --feature, --function, interactive
   let answers
 
-  if (parameters.options.min) {
-    answers = options.answers.min
-  } else if (parameters.options.max) {
-    answers = options.answers.max
+  if (parameters.options.function) {
+    answers = options.answers.func
+  } else if (parameters.options.feature) {
+    answers = options.answers.feat
   } else {
     answers = await prompt.ask(options.questions)
   }
 
   const name = parameters.third
-  const spinner = print.spin(`using ignite ${cyan('base')} plate`).succeed()
-
+  let spinner = print.spin(`using ignite ${cyan('base')} plate`).succeed()
+  if (parameters.options.feature) { let spinner = print.spin(`with the ${cyan('feature')} preset`).succeed() }
+  if (parameters.options.function) { let spinner = print.spin(`with the ${cyan('function')} preset`).succeed() }
   const features = answers['dir-structure'] === 'feature'
-  const pathToMainJs = features ? './src/app/' : '/App/Containers/'
-  const componentpath = features ? './src/views/' : '/App/Components/'
-  const appdir = features ? './src/' : './App/'
+  const pathToMainJs = features ? './src/app/' : './src/App/'
+  const componentpath = features ? './src/views/' : './src/Components/'
+  const appdir = features ? './src/' : './src/'
   const linter = answers['linter']
   const storybooks = answers['storybooks']
   const ii18n = answers['i18n']
@@ -89,11 +90,11 @@ async function install (context) {
   }
 
   // Copy Internationalisation Config
-  if (ii18n) {
-    filesystem.copy(`${__dirname}/boilerplate/common/i18n`, `${appdir}/i18n`, {
-      overwrite: true
-    })
-  }
+  // if (ii18n) {
+  //   filesystem.copy(`${__dirname}/boilerplate/common/i18n`, `${appdir}/i18n`, {
+  //    overwrite: true
+  //   })
+  // }
 
   // generate templates
   spinner.text = '▸ generating files'
@@ -129,6 +130,12 @@ async function install (context) {
     templates.push(
       { template: '.prettierrc', target: '.prettierrc' },
       { template: '.prettierignore', target: '.prettierignore' }
+    )
+  }
+
+  if (ii18n) {
+    templates.push(
+      { template: '.linguirc', target: '.linguirc' },
     )
   }
 
@@ -200,16 +207,6 @@ async function install (context) {
   await mergePackageJsons()
 
   spinner.stop()
-
-  // react native link -- must use spawn & stdio: ignore or it hangs!! :(
-  if (ii18n) {
-    spinner.text = `▸ linking native libraries`
-    spinner.start()
-    await system.spawn('react-native link react-native-i18n', {
-      stdio: 'ignore'
-    })
-    spinner.stop()
-  }
 
   // pass along the debug flag if we're running in that mode
   const debugFlag = parameters.options.debug ? '--debug' : ''
